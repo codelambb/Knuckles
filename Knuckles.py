@@ -82,7 +82,7 @@ async def help(ctx):
 @client.command()
 async def modHelp(ctx):
 	mod = discord.Embed(tittle="mod", color=ctx.author.color)
-	mod.add_field(name="Moderation Command Menu", value="```!clear (ammount) : Deletes the specified ammount of messages from the channel```\n```!ban (user) (reasion) : Bans the specified user from the server```\n```!kick (user) (reason) : Kicks the specified user from the server```\n```mute (user) (reason) : Mutes the specified user from the server```\n```unmute (user) : Unmutes the specified user```\n")
+	mod.add_field(name="Moderation Command Menu", value="```!clear (ammount) : Deletes the specified ammount of messages from the channel```\n```!ban (user) (reasion) : Bans the specified user from the server```\n```!kick (user) (reason) : Kicks the specified user from the server```\n```!mute (user) (reason) : Mutes the specified user from the server```\n```!unmute (user) : Unmutes the specified user```\n")
 	mod.set_footer(text="More moderation commands will be added soon")
 	await ctx.send(embed=mod)
 
@@ -90,7 +90,8 @@ async def modHelp(ctx):
 @client.command()
 async def miscHelp(ctx):
 	misc = discord.Embed(tittle="misc", color=ctx.author.color)
-	misc.add_field(name="Miscellaneous Command Menu", value="```!ping : Tells the bot's latency```\n```!8ball (question) : Tells the answer of the asked question in a random yes/no answer```\n```!meme : Send a hot meme from reddit```\n```")
+	misc.add_field(name="Miscellaneous Command Menu", value="```!ping : Tells the bot's latency```\n```!8ball (question) : Tells the answer of the asked question in a random yes/no answer```\n```!meme : Send a hot meme from reddit```\n")
+	misc.set_footer(text="More miscellaneous commands will be added soon")
 	await ctx.send(embed=misc)
 
 #ban command
