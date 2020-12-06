@@ -108,7 +108,7 @@ async def kick(ctx, member: discord.Member, *, reason="No reason provided"):
 
 #mute command
 @client.command(aliases=['m'])
-@client.has_permissions(manage_roles=True, administrator=True)
+@commands.has_permissions(manage_roles=True, administrator=True)
 async def mute(ctx, member: discord.Member, *, reason="No reason provided"):
 	await ctx.send(f'Muted {member}.')
 	await member.send(f'You have been muted in the server {guild.name} for {reason}')
