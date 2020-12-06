@@ -142,5 +142,6 @@ async def meme(ctx):
 async def announce(ctx, message ):
 	anno = discord.Embed(title="Announc", color=ctx.author.color)
 	anno.add_field(name="Announcement", value=message)
+	await ctx.send(embed=anno) 
 
 client.run(os.environ['DISCORD_TOKEN'])
