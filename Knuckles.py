@@ -11,12 +11,12 @@ import random
 import typing
 
 intents = discord.Intents.all()
-prefixes = ["!","#",">"]
+prefixes = ["!"]
 client = commands.Bot(command_prefix=list(prefixes),intents = intents)
 
 client = commands.Bot(command_prefix = prefixes)
 
-status = ['Listening to !help', 'Listening to #help', 'Listening to >help']
+status = ['Listening to !help', 'Make sure to read the rules!']
 
 client.remove_command("help")
 
@@ -72,10 +72,67 @@ async def _8ball(ctx, question):
 @client.command(aliases=['h'])
 async def help(ctx):
 	helpEmbed = discord.Embed(tittle="Help Menu", color=ctx.author.color)
-	helpEmbed.set_author(name="Help Menu:\nPrefixes = '!'  '#'  '>'")
+	helpEmbed.set_author(name="Help Menu:\nPrefix = '!'")
 	helpEmbed.add_field(name="Moderation Command Menu", value="```Type .modHelp to open that```", inline=True)
 	helpEmbed.add_field(name="Miscellaneous Command Menu", value="```Type .miscHelp to open that```", inline=True)
 
 	await ctx.send(embed=helpEmbed)
 
-client.run("NzgzODg5OTcxMTUzMDc2Mjc5.X8hUbQ.t2Y72dDVPJuhnxQQFs0-RWJ8iYo")
+#modHelp
+@client.command()
+async def modHelp(ctx):
+	mod = discord.Embed(tittle="mod", color=ctx.author.color)
+	mod.add_field(name="Moderation Command Menu", value="```!clear (ammount) : Deletes the specified ammount of messages from the channel```\n```!ban (user) (reasion) : Bans the specified user from the server```\n```!kick (user) (reason) : Kicks the specified user from the server```\n```mute (user) (reason) : Mutes the specified user from the server```\n```unmute (user) : Unmutes the specified user```\n")
+	mod.set_footer(text="More moderation commands will be added soon")
+	await ctx.send(embed=modHelp)
+
+#miscHelp
+@client.command()
+async def miscHelp(ctx):
+	misc = discord.Embed(tittle="misc", color=ctx.author.color)
+	misc.add_field(name="Miscellaneous Command Menu", value="```!ping : Tells the bot's latency```\n```!8ball (question) : Tells the answer of the asked question in a random yes/no answer```\n```!meme : Send a hot meme from reddit```\n```")
+
+#ban command
+@client.command(aliases=['b'])
+@commands.has_permissions(ban_members=True, administrator=True)
+async def ban(ctx, member: discord.Member, *, reason="No reason provided"):
+	await ctx.send(f'Banned {member} from the server.')
+	await member.ban(reason=reason)
+
+#kick command
+@client.command(aliases=['k'])
+@commands.has_permissions(kick_members=True, administrator=True)
+async def kick(ctx, member: discord.Member, *, reason="No reason provided"):
+	await ctx.send(f'Kicked {member} from the server.')
+	await member.kick(reason=reason)
+
+#mute command
+@client.command(aliases=['m'])
+@client.has_permissions(manage_roles=True, administrator=True)
+async def mute(ctx, member: discord.Member, *, reason="No reason provided"):
+	await ctx.send(f'Muted {member}.')
+	await member.send(f'You have been muted in the server {guild.name} for {reason}')
+	muted_role = discord.utils.find(ctx.guild.roles, name="Muted")
+	await member.add_role(muted_role, reason=reason)
+
+#unmute command
+@client.command()
+@commands.has_permissions(manage_roles=True, administrator=True)
+async def unmute(ctx, member: discord.Member):
+	mutedRole = discord.utils.get(ctx.guild.roles, name="Muted")
+	await member.remove_roles(mutedRole)
+	await ctx.send(f'Unmuted {members.mention}')
+	await member.send(f'You have been unmuted from the server {guild.name}')
+
+#meme command
+@client.command()
+async def meme(ctx):
+	async with ctx.channel.typing():
+        async with aiohttp.ClientSession() as cs:
+            async with cs.get("https://www.reddit.com/r/dankmemes/new.json?sort=hot,") as r:
+                res = await r.json()
+                embed = discord.Embed(title="Here is a meme", color=0x00FFFF)
+                embed.set_image(url=res['data']['children'] [random.randint(0, 25)]['data']['url'])
+                await ctx.send(embed=embed)
+
+client.run(os.environ['DISCORD_TOKEN'])
