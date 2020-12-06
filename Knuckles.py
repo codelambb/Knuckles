@@ -139,10 +139,11 @@ async def meme(ctx):
 
 #announcemnt command
 @client.command(aliases=["ann"])
-@commands.has_permissions(administrator=True, manage_messages=True, manage_messages=True, manage_roles=True, ban_members=True, kick_members=True)
+@commands.has_permissions(administrator=True, manage_messages=True, manage_roles=True, ban_members=True, kick_members=True)
 async def announce(ctx, message ):
 	anno = discord.Embed(tittle="ann", color=ctx.author.color)
 	anno.add_field(name="Announcement", value=message)
+	anno.set_footer(text=f'Announcement by {ctx.author.mention}')
 	await ctx.send(embed=anno) 
 
 client.run(os.environ['DISCORD_TOKEN'])
