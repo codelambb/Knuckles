@@ -3,6 +3,7 @@ from discord.ext import commands, tasks
 import os
 from random import choice
 import aiohttp
+import json
 from random import randint
 import time
 import datetime
@@ -143,7 +144,66 @@ async def meme(ctx):
 async def announce(ctx, message ):
 	anno = discord.Embed(tittle="ann", color=ctx.author.color)
 	anno.add_field(name="Announcement", value=message)
-	anno.set_footer(text=f'Announcement by {ctx.author.mention}')
-	await ctx.send(embed=anno) 
+	await ctx.send(embed=anno)
+	await ctx.send('@everyone', delete_after=3) 
+
+#ytsearch command
+@client.command()
+async def ytsearch(ctx, querry):
+	await ctx.send(f'```https://www.youtube.com/results?search_query={querry}```\nHere you go!')
+
+#economy things:
+
+#balance command
+@client.command()
+async def balance(ctx):
+	await open_account(ctx.author)
+	users = ctx.author
+	users = await get_bank_data()
+	
+	wallet_amt = users[str(user.id)["wallet"]]
+	bank_amt = users[str(user.id)["bank"]]
+
+	em = discord.Embed(title = f"{ctx.author.name}'s balance",color=discord.Color.red())
+	em.add_field(name = "Wallet Balance", value = wallet_amt)
+	em.add_field(name = "Bank Balance", value = bank_amt)
+	await ctx.send(embed=em)
+
+@client.command()
+async def beg(ctx):
+	await open_account(ctx.author)
+
+	users = await get_bank_data()
+
+	users = ctx.author
+
+	earnings = random.randrange(101)
+
+	await ctx.send(f'Someone gave you {earnings} coins!')
+
+	users[str(users.id)]["wallet"] += earnings
+
+	with open("mainbank.json","w") as f:
+		json.dump(users,f)
+
+async def open_account(user):
+	
+	users = await get_bank_data()
+
+	if str(user.id) in users:
+		return False
+	else:
+		users[str(users.id)] = {}
+		users[str(users.id)]["wallet"] = 0
+		users[str(users.id)]["bank"] = 0
+	with open("mainbank.json","w") as f:
+		users = json.dump(users,f)
+	return True
+
+async def get_bank_data():
+	with open("mainbank.json","r") as f:
+		users = json.load(f)
+
+	return users
 
 client.run(os.environ['DISCORD_TOKEN'])
