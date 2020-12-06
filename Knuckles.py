@@ -140,7 +140,7 @@ async def meme(ctx):
 #announcemnt command
 @client.command(aliases=["ann"])
 async def announce(ctx, message ):
-	anno = discord.Embed(title="Announc", color=ctx.author.color)
+	anno = discord.Embed(title="none", color=ctx.author.color)
 	anno.add_field(name="Announcement", value=message)
 	await ctx.send(embed=anno) 
 
