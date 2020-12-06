@@ -79,15 +79,15 @@ async def help(ctx):
 	await ctx.send(embed=helpEmbed)
 
 #modHelp
-@client.command()
+@client.command(aliases=['mocd'])
 async def modHelp(ctx):
 	mod = discord.Embed(tittle="mod", color=ctx.author.color)
-	mod.add_field(name="Moderation Command Menu", value="```!clear (ammount) : Deletes the specified ammount of messages from the channel```\n```!ban (user) (reasion) : Bans the specified user from the server```\n```!kick (user) (reason) : Kicks the specified user from the server```\n```!mute (user) (reason) : Mutes the specified user from the server```\n```!unmute (user) : Unmutes the specified user```\n")
+	mod.add_field(name="Moderation Command Menu", value="```!clear (ammount) : Deletes the specified ammount of messages from the channel```\n```!ban (user) (reasion) : Bans the specified user from the server```\n```!kick (user) (reason) : Kicks the specified user from the server```\n```!mute (user) (reason) : Mutes the specified user from the server```\n```!unmute (user) : Unmutes the specified user```\n```!announce (message) : Sends a announcemnt in the server with and embed style```\n")
 	mod.set_footer(text="More moderation commands will be added soon")
 	await ctx.send(embed=mod)
 
 #miscHelp
-@client.command()
+@client.command(aliases=['micd'])
 async def miscHelp(ctx):
 	misc = discord.Embed(tittle="misc", color=ctx.author.color)
 	misc.add_field(name="Miscellaneous Command Menu", value="```!ping : Tells the bot's latency```\n```!8ball (question) : Tells the answer of the asked question in a random yes/no answer```\n```!meme : Send a hot meme from reddit```\n")
@@ -139,8 +139,9 @@ async def meme(ctx):
 
 #announcemnt command
 @client.command(aliases=["ann"])
+@commands.has_permissions(administrator=True, manage_messages=True, manage_messages=True, manage_roles=True, ban_members=True, kick_members=True)
 async def announce(ctx, message ):
-	anno = discord.Embed(title="ann", color=ctx.author.color)
+	anno = discord.Embed(tittle="ann", color=ctx.author.color)
 	anno.add_field(name="Announcement", value=message)
 	await ctx.send(embed=anno) 
 
