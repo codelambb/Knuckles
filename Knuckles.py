@@ -137,4 +137,10 @@ async def meme(ctx):
                 embed.set_image(url=res['data']['children'] [random.randint(0, 25)]['data']['url'])
                 await ctx.send(embed=embed)
 
+#announcemnt command
+@client.command(aliases=["ann"])
+async def announce(ctx, message ):
+	anno = discord.Embed(title="Announc", color=ctx.author.color)
+	anno.add_field(name="Announcement", value=message)
+
 client.run(os.environ['DISCORD_TOKEN'])
