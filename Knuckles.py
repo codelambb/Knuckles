@@ -124,10 +124,10 @@ async def unmute(ctx, member: discord.Member):
 	await ctx.send(f'Unmuted {members.mention}')
 	await member.send(f'You have been unmuted from the server {guild.name}')
 
-#meme command
+#meme command 
 @client.command()
 async def meme(ctx):
-	async with ctx.channel.typing():
+    async with ctx.channel.typing():
         async with aiohttp.ClientSession() as cs:
             async with cs.get("https://www.reddit.com/r/dankmemes/new.json?sort=hot,") as r:
                 res = await r.json()
