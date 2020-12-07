@@ -11,12 +11,12 @@ import random
 import typing
 
 intents = discord.Intents.all()
-prefixes = [">"]
+prefixes = ["!"]
 client = commands.Bot(command_prefix=list(prefixes),intents = intents)
 
 client = commands.Bot(command_prefix = prefixes)
 
-status = ['Listening to >help', 'Make sure to read the rules!']
+status = ['Listening to !help', 'Make sure to read the rules!']
 
 client.remove_command("help")
 
@@ -175,6 +175,6 @@ async def announce(ctx,*,message):
 	anno.set_footer(text=f"Announcement by {ctx.author.name}")
 	await ctx.channel.purge(limit=1)
 	await ctx.send(embed=anno)
-	await ctx.send("@DarkLord")
+	await ctx.send("@everyone", delete_after=3)
 
 client.run(os.environ['DISCORD_TOKEN'])
