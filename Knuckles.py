@@ -98,7 +98,7 @@ async def mischelp(ctx):
 @client.command(aliases=['b'])
 @commands.has_permissions(ban_members=True, administrator=True)
 async def ban(ctx, member: discord.Member, *, reason="No reason provided"):
-	await ctx.send(f'Banned {member} from the server.')
+	await ctx.send(f'Banned {member} from the server. BOOM!')
 	await member.ban(reason=reason)
 
 #kick command
@@ -175,9 +175,8 @@ async def announce(ctx,*,message):
 	anno = discord.Embed(tittle="ann", color=ctx.author.color)
 	anno.add_field(name="Announcement", value=message)
 	anno.set_footer(text=f"Announcement by {ctx.author.name}")
-	anno.set_image(url='https://media.tenor.co/videos/ad4451f6b1316c8a31f2a59030787e15/mp4')
 	await ctx.channel.purge(limit=1)
 	await ctx.send(embed=anno)
-	await ctx.send("It works!", delete_after=3)
+	await ctx.send("@everyone", delete_after=3)
 
 client.run(os.environ['DISCORD_TOKEN'])
