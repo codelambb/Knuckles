@@ -176,6 +176,6 @@ async def announce(ctx,*,message):
 	anno.set_image(url=f'https://media.tenor.co/videos/ad4451f6b1316c8a31f2a59030787e15/mp4')
 	await ctx.channel.purge(limit=1)
 	await ctx.send(embed=anno)
-	await ctx.send("@everyone", delete_after=3)
+	await ctx.send("It works!", delete_after=3)
 
 client.run(os.environ['DISCORD_TOKEN'])
