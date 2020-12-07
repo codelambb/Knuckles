@@ -175,6 +175,5 @@ async def announce(ctx,*,message):
 	anno.set_footer(text=f"Announcement by {ctx.author.name}")
 	await ctx.channel.purge(limit=1)
 	await ctx.send(embed=anno)
-	await ctx.send("@everyone", delete_after=2)
 
 client.run(os.environ['DISCORD_TOKEN'])
