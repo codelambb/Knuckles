@@ -3,7 +3,6 @@ from discord.ext import commands, tasks
 import os
 from random import choice
 import aiohttp
-import json
 from random import randint
 import time
 import datetime
@@ -12,12 +11,12 @@ import random
 import typing
 
 intents = discord.Intents.all()
-prefixes = ["!"]
+prefixes = [">"]
 client = commands.Bot(command_prefix=list(prefixes),intents = intents)
 
 client = commands.Bot(command_prefix = prefixes)
 
-status = ['Listening to !help', 'Make sure to read the rules!']
+status = ['Listening to >help', 'Make sure to read the rules!']
 
 client.remove_command("help")
 
@@ -74,26 +73,24 @@ async def _8ball(ctx, question):
 async def help(ctx):
 	helpEmbed = discord.Embed(tittle="Help Menu", color=ctx.author.color)
 	helpEmbed.set_author(name="Help Menu:\nPrefix = '!'")
-	helpEmbed.add_field(name="Moderation Command Menu", value="```Type !modHelp to open that```", inline=True)
-	helpEmbed.add_field(name="Miscellaneous Command Menu", value="```Type !miscHelp to open that```", inline=True)
+	helpEmbed.add_field(name="Moderation Command Menu", value="```Type .modHelp to open that```", inline=True)
+	helpEmbed.add_field(name="Miscellaneous Command Menu", value="```Type .miscHelp to open that```", inline=True)
 
 	await ctx.send(embed=helpEmbed)
 
 #modHelp
-@client.command(aliases=['mocd'])
+@client.command()
 async def modHelp(ctx):
 	mod = discord.Embed(tittle="mod", color=ctx.author.color)
-	mod.add_field(name="Moderation Command Menu", value="```!clear (ammount) : Deletes the specified ammount of messages from the channel```\n```!ban (user) (reasion) : Bans the specified user from the server```\n```!kick (user) (reason) : Kicks the specified user from the server```\n```!mute (user) (reason) : Mutes the specified user from the server```\n```!unmute (user) : Unmutes the specified user```\n```!announce (message) : Sends a announcemnt in the server with and embed style```\n")
+	mod.add_field(name="Moderation Command Menu", value="```!clear (ammount) : Deletes the specified ammount of messages from the channel```\n```!ban (user) (reasion) : Bans the specified user from the server```\n```!kick (user) (reason) : Kicks the specified user from the server```\n```mute (user) (reason) : Mutes the specified user from the server```\n```unmute (user) : Unmutes the specified user```\n")
 	mod.set_footer(text="More moderation commands will be added soon")
-	await ctx.send(embed=mod)
+	await ctx.send(embed=modHelp)
 
 #miscHelp
-@client.command(aliases=['micd'])
+@client.command()
 async def miscHelp(ctx):
 	misc = discord.Embed(tittle="misc", color=ctx.author.color)
-	misc.add_field(name="Miscellaneous Command Menu", value="```!ping : Tells the bot's latency```\n```!8ball (question) : Tells the answer of the asked question in a random yes/no answer```\n```!meme : Send a hot meme from reddit```\n")
-	misc.set_footer(text="More miscellaneous commands will be added soon")
-	await ctx.send(embed=misc)
+	misc.add_field(name="Miscellaneous Command Menu", value="```!ping : Tells the bot's latency```\n```!8ball (question) : Tells the answer of the asked question in a random yes/no answer```\n```!meme : Send a hot meme from reddit```\n```")
 
 #ban command
 @client.command(aliases=['b'])
@@ -110,13 +107,28 @@ async def kick(ctx, member: discord.Member, *, reason="No reason provided"):
 	await member.kick(reason=reason)
 
 #mute command
-@client.command(aliases=['m'])
-@commands.has_permissions(manage_roles=True, administrator=True)
-async def mute(ctx, member: discord.Member, *, reason="No reason provided"):
-	await ctx.send(f'Muted {member}.')
-	await member.send(f'You have been muted in the server {guild.name} for {reason}')
-	muted_role = discord.utils.find(ctx.guild.roles, name="Muted")
-	await member.add_role(muted_role, reason=reason)
+@client.command()
+@commands.has_permissions(kick_members=True, manage_messages=True, administrator=True, manage_roles=True)
+async def mute(ctx, member: discord.Member, mute_time : int, *, reason=None):
+    if not member:
+        await ctx.send("Who do you want me to mute?")
+        return
+    role = discord.utils.get(ctx.guild.roles, name="Muted")
+
+    if not role:
+        await ctx.guild.create_role(name='Muted')
+
+    for channel in ctx.guild.channels:
+            await channel.set_permissions(role, speak=False, send_messages=False, read_message_history=True, read_messages=True)
+
+    await member.add_roles(role)
+    await ctx.send(f"{member.mention} was muted for {reason}")
+    await member.send(f"You were muted in **{ctx.guild}** for {reason}")
+
+    await asyncio.sleep(mute_time)
+    await member.remove_roles(role)
+    await ctx.send(f"{member.mention} was unmuted")
+    await member.send(f"You were unmuted in **{ctx.guild}**")
 
 #unmute command
 @client.command()
@@ -124,86 +136,45 @@ async def mute(ctx, member: discord.Member, *, reason="No reason provided"):
 async def unmute(ctx, member: discord.Member):
 	mutedRole = discord.utils.get(ctx.guild.roles, name="Muted")
 	await member.remove_roles(mutedRole)
-	await ctx.send(f'Unmuted {members.mention}')
-	await member.send(f'You have been unmuted from the server {guild.name}')
+	await ctx.send(f'Unmuted {ctx.members.mention}')
+	await member.send(f'You have been unmuted from the server {ctx.guild.name}')
 
-#meme command 
+#meme command
 @client.command()
 async def meme(ctx):
-    async with ctx.channel.typing():
-        async with aiohttp.ClientSession() as cs:
-            async with cs.get("https://www.reddit.com/r/dankmemes/new.json?sort=hot,") as r:
-                res = await r.json()
-                embed = discord.Embed(title="Here is a meme", color=0x00FFFF)
-                embed.set_image(url=res['data']['children'] [random.randint(0, 25)]['data']['url'])
-                await ctx.send(embed=embed)
+    async with aiohttp.ClientSession() as cs:
+        async with cs.get ('https://www.reddit.com/r/dankmemes/new.json?sort=hot') as r:
+            res = await r.json()
+            embed = discord.Embed(title = "Memes", color = discord.Color.orange())
+            embed.set_image(url=res['data']['children'] [random.randint(0, 25)]['data']['url'])
+            await ctx.send(embed=embed)
+            
+#kill command
+@client.command()
+async def kill(ctx, user):
+	k = random.randint(0,5)
+	if k == 0:
+		await ctx.send(f'You challenged {user} to a fist fight to the death. You won.')
+	if k == 2:
+		await ctx.send(f'{user} had a mid air collision with nyan-cat')
+	if k == 3:
+		await ctx.send(f'{user} fell down a cliff while playing Pokemon Go. Good job on keeping your nose in that puny phone. :iphone:')
+	if k == 4:
+		await ctx.send(f"{user} presses a random button and is teleported to the height of 100m, allowing them to fall to their inevitable death.\nMoral of the story: Don't go around pressing random buttons.")
+	if k == 5:
+		await ctx.send(f'{user} is sucked into Minecraft. {user}, being a noob at the so called Real-Life Minecraft faces the Game Over screen.')
+
+
 
 #announcemnt command
 @client.command(aliases=["ann"])
 @commands.has_permissions(administrator=True, manage_messages=True, manage_roles=True, ban_members=True, kick_members=True)
-async def announce(ctx, message ):
+async def announce(ctx,*,message):
 	anno = discord.Embed(tittle="ann", color=ctx.author.color)
 	anno.add_field(name="Announcement", value=message)
+	anno.set_footer(text=f"Announcement by {ctx.author.name}")
+	await ctx.channel.purge(limit=1)
 	await ctx.send(embed=anno)
-	await ctx.send('@everyone', delete_after=3) 
-
-#ytsearch command
-@client.command()
-async def ytsearch(ctx, querry):
-	await ctx.send(f'```https://www.youtube.com/results?search_query={querry}```\nHere you go!')
-
-#economy things:
-
-#balance command
-@client.command()
-async def balance(ctx):
-	await open_account(ctx.author)
-	users = ctx.author
-	users = await get_bank_data()
-	
-	wallet_amt = users[str(user.id)["wallet"]]
-	bank_amt = users[str(user.id)["bank"]]
-
-	em = discord.Embed(title = f"{ctx.author.name}'s balance",color=discord.Color.red())
-	em.add_field(name = "Wallet Balance", value = wallet_amt)
-	em.add_field(name = "Bank Balance", value = bank_amt)
-	await ctx.send(embed=em)
-
-@client.command()
-async def beg(ctx):
-	await open_account(ctx.author)
-
-	users = await get_bank_data()
-
-	users = ctx.author
-
-	earnings = random.randrange(101)
-
-	await ctx.send(f'Someone gave you {earnings} coins!')
-
-	users[str(users.id)]["wallet"] += earnings
-
-	with open("mainbank.json","w") as f:
-		json.dump(users,f)
-
-async def open_account(user):
-	
-	users = await get_bank_data()
-
-	if str(user.id) in users:
-		return False
-	else:
-		users[str(users.id)] = {}
-		users[str(users.id)]["wallet"] = 0
-		users[str(users.id)]["bank"] = 0
-	with open("mainbank.json","w") as f:
-		users = json.dump(users,f)
-	return True
-
-async def get_bank_data():
-	with open("mainbank.json","r") as f:
-		users = json.load(f)
-
-	return users
+	await ctx.send("@everyone", delete_after=2)
 
 client.run(os.environ['DISCORD_TOKEN'])
