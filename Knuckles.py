@@ -12,15 +12,13 @@ import typing
 
 intents = discord.Intents.all()
 prefixes = ["!"]
-client = commands.Bot(command_prefix=list(prefixes),intents = intents)
-
-client = commands.Bot(command_prefix = prefixes)
+client = commands.Bot(command_prefix=prefixes, intents=intents)
 
 status = ['Listening to !help', 'Make sure to read the rules!']
 
 client.remove_command("help")
 
-filter_words = ["fuck","bitch","pussy"]
+filter_words = ["fuck","bitch","pussy","chutiya","sala","arse"]
 
 @client.event
 async def on_ready():
@@ -39,10 +37,10 @@ async def ping(ctx):
 #clear command
 @client.command(aliases=["cls", "purge"])
 @commands.has_permissions(manage_messages=True, administrator=True)
-async def clear(ctx, ammount:int):
-	await ctx.channel.purge(limit=ammount+1)
-	await ctx.send(f'I have deleted {ammount} of messages', delete_after=5)
-	return
+async def clear(ctx, ammount: int):
+    await ctx.channel.purge(limit=ammount + 1)
+    await ctx.send(f'I have deleted {ammount} of messages', delete_after=5)
+    return
 
 #8ball command
 @client.command(aliases=['8ball'])
@@ -113,7 +111,7 @@ async def kick(ctx, member: discord.Member, *, reason="No reason provided"):
 #mute command
 @client.command()
 @commands.has_permissions(kick_members=True, manage_messages=True, administrator=True, manage_roles=True)
-async def mute(ctx, member: discord.Member, mute_time : int, *, reason=None):
+async def mute(ctx, member: discord.Member, mute_time, *, reason=None):
     if not member:
         await ctx.send("Who do you want me to mute?")
         return
@@ -127,12 +125,31 @@ async def mute(ctx, member: discord.Member, mute_time : int, *, reason=None):
 
     await member.add_roles(role)
     await ctx.send(f"{member.mention} was muted for {reason}")
-    await member.send(f"You were muted in **{ctx.guild}** for {reason}")
 
-    await asyncio.sleep(mute_time)
-    await member.remove_roles(role)
-    await ctx.send(f"{member.mention} was unmuted")
-    await member.send(f"You were unmuted in **{ctx.guild}**")
+    if mute_time[-1] == 's':
+    	x = int(mute_time[0:-1])
+    	await asyncio.sleep(x)
+    	await member.remove_roles(role)
+    	await ctx.send(f"{member.mention} was unmuted")
+
+    elif mute_time[-1] == 'm':
+    	x = int(mute_time[0:-1]) * 60
+    	await asyncio.sleep(x)
+    	await member.remove_roles(role)
+    	await ctx.send(f"{member.mention} was unmuted")
+    
+
+    elif mute_time[-1] == 'h':
+    	x = int(mute_time[0:-1]) * 3600
+    	await asyncio.sleep(x)
+    	await member.remove_roles(role)
+    	await ctx.send(f"{member.mention} was unmuted")
+
+    elif mute_time[-1] == 'd':
+    	x = int(mute_time[0:-1] * 86400)
+    	await asyncio.sleep(x)
+    	await member.remove_roles(role)
+    	await ctx.send(f"{member.mention} was unmuted")
 
 #unmute command
 @client.command()
@@ -141,7 +158,6 @@ async def unmute(ctx, member: discord.Member):
 	mutedRole = discord.utils.get(ctx.guild.roles, name="Muted")
 	await member.remove_roles(mutedRole)
 	await ctx.send(f'Unmuted {ctx.members.mention}')
-	await member.send(f'You have been unmuted from the server {ctx.guild.name}')
 
 #meme command
 @client.command()
@@ -188,6 +204,14 @@ async def on_message(msg):
     if word in msg.content:
       await msg.delete()
       await msg.channel.send(f"{msg.author.mention}, Swearing is not allowed in this server")
+  
+  #Good night message
+  if msg == 'gn' or msg == 'good night':
+    await msg.channel.send("Good Night!")
+
+  #Good morning message
+  if msg == 'gm' or msg == 'good morning':
+    await msg.channel.send("Good Morning")
 
   await client.process_commands(msg)
 
@@ -198,21 +222,20 @@ async def verify(ctx):
   verifiedrole = discord.utils.get(ctx.guild.roles, name='Members')
   await ctx.author.add_roles(verifiedrole)
   verify = discord.Embed(title="Verification",description="Congrats! You have been verified!", color=ctx.author.color)
-  await ctx.send(embed=verify)
   await ctx.author.send(embed=verify)
+  await ctx.send(embed=verify)
   u = discord.utils.get(ctx.guild.roles, name='Not Verified')
   e = discord.utils.get(ctx.guild.roles, name='⁣  ⁣    ⁣     About Me⁣  ⁣    ⁣')
   x = discord.utils.get(ctx.guild.roles, name='⁣  ⁣    ⁣    Games I play ⁣   ⁣      ⁣ ⁣')
-  o = discord.utils.get(ctx.guild.roles, name='⁣⁣   ⁣ ⁣   ⁣ ⁣     Pings         ⁣  ⁣ ⁣ ⁣')  
+  y = discord.utils.get(ctx.guild.roles, name='⁣   ⁣ ⁣   ⁣ ⁣     Pings         ⁣  ⁣ ⁣ ⁣')
   await ctx.author.remove_roles(u)
   await ctx.author.add_roles(e)
   await ctx.author.add_roles(x)
-  await ctx.author.add_roles(o)
-  wel = discord.Embed(title=f"Welcome {ctx.author.name} to 𝗕𝗿𝘂𝘁𝗲 𝗙𝗼𝗿𝗰𝗲 𝗢𝗻𝗹𝘆 ™",color=discord.Color.red())
-  wel.add_field(name="Here you can find:", value="🎮》Gaming and game chat\n🎮》Game nights (coming soon)\n🎮》Music\n🎮》Fun bots to entertain you :)\n",inline=False)
-  wel.add_field(name="Check out these channels!!!", value="#🏡》about-us - to know about us\n#📜》rules - make sure to follow them\n#📊》self-roles - give yourself some cool roles",inline=False)
-  wel.set_image(url='https://media.discordapp.net/attachments/775769420206964776/786541416775286814/Presentation1.png')
-  wel.set_thumbnail(url=ctx.author.avatar_url)
+  await ctx.author.add_roles(y)
+  wel = discord.Embed(title=f"Welcome {ctx.author.name} to 𝗕𝗿𝘂𝘁𝗲 𝗙𝗼𝗿𝗰𝗲 𝗢𝗻𝗹𝘆 ™", color=discord.Color.red())
+  wel.add_field(name="Here you can find:",value="🎮》Gaming and game chat\n🎮》Game nights (coming soon)\n🎮》Music\n🎮》Fun bots to entertain you :)\n", inline=False)
+  wel.add_field(name="Check out these channels!!!", value="#🏡》about-us - to know about us\n#📜》rules - make sure to follow them\n#📊》self-roles - give yourself some cool roles\n", inline=False)
+  wel.set_image(url='https://images-ext-2.discordapp.net/external/bv_iH_uxZrUrqYi4Sn6sQJg70dGllmRNPMELNCzudlU/%3Fwidth%3D627%26height%3D390/https/media.discordapp.net/attachments/775232813510426694/782935786470899772/Presentation1.png')
   chl = client.get_channel(771251330920480788)
   await chl.send(embed=wel)
 
@@ -254,12 +277,6 @@ async def on_member_join(member):
 
 #all the errors
 
-#verify error
-@verify.error 
-async def verify_error(ctx, error):
-    em=discord.Embed(title="Error", description="You are already verified!", color=discord.Color.red())
-    await ctx.send(embed=em, delete_after=5)
-
 #userinfo error
 @userinfo.error
 async def userinfo_error(ctx, error):
@@ -269,4 +286,4 @@ async def userinfo_error(ctx, error):
 
         await ctx.send(embed=em, delete_after=5)
 
-client.run('NzgzODg5OTcxMTUzMDc2Mjc5.X8hUbQ.qlZthWq3YDvzo__WrEyTU2ziKkE')
+client.run(os.environ['DISCORD_TOKEN'])
