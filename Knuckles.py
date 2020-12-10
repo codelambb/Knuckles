@@ -20,6 +20,8 @@ status = ['Listening to !help', 'Make sure to read the rules!']
 
 client.remove_command("help")
 
+filter_words = ["fuck","bitch","pussy"]
+
 @client.event
 async def on_ready():
 	change_status.start()
@@ -177,6 +179,35 @@ async def announce(ctx,*,message):
 	anno.set_footer(text=f"Announcement by {ctx.author.name}")
 	await ctx.channel.purge(limit=1)
 	await ctx.send(embed=anno)
-	await ctx.send("@everyone", delete_after=3)
+	await ctx.send("@Announcements", delete_after=3)
+
+#swear stopper
+@client.event
+async def on_message(msg):
+  for word in filter_words:
+    if word in msg.content:
+      await msg.delete()
+      await msg.channel.send(f"{msg.author.mention}, Swearing is not allowed in this server")
+
+  await client.process_commands(msg)
+
+#verify command
+@client.command()
+@commands.has_role("Not Verified")
+async def verify(ctx):
+  verifiedrole = discord.utils.get(ctx.guild.roles, name='Verified')
+  await ctx.author.add_roles(verifiedrole)
+  verify = discord.Embed(title="Verification",description="Congrats! You have been verified!", color=ctx.author.color)
+  await ctx.send(embed=verify)
+  await ctx.author.send(embed=verify)
+  u = discord.utils.get(ctx.guild.roles, name='Not Verified')
+  await ctx.author.remove_roles(u)
+  wel = discord.Embed(title=f"Welcome to {ctx.author.name} 𝗕𝗿𝘂𝘁𝗲 𝗙𝗼𝗿𝗰𝗲 𝗢𝗻𝗹𝘆 ™",color=discord.Color.red())
+  wel.add_field(name="Here you can find:", value="🎮》Gaming and game chat\n🎮》Game nights (coming soon)\n🎮》Music\n🎮》Fun bots to entertain you :)\n")
+  wel.add_field(name="Check out these channels!!!", value="#🏡》about-us - to know about us\n#📜》rules - make sure to follow them\n#📊》self-roles - give yourself some cool roles")
+  wel.set_image(url='https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/67401945-34fc-46b8-8e8f-1982847277d4/ddba22b-2fad9d00-1d3f-4ec8-a65d-199a09dfa4e1.gif?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOiIsImlzcyI6InVybjphcHA6Iiwib2JqIjpbW3sicGF0aCI6IlwvZlwvNjc0MDE5NDUtMzRmYy00NmI4LThlOGYtMTk4Mjg0NzI3N2Q0XC9kZGJhMjJiLTJmYWQ5ZDAwLTFkM2YtNGVjOC1hNjVkLTE5OWEwOWRmYTRlMS5naWYifV1dLCJhdWQiOlsidXJuOnNlcnZpY2U6ZmlsZS5kb3dubG9hZCJdfQ._-whxwEBEaTLWUvSWL80KTGiwpoy9dSPzXSRhfTAzeM')
+  wel.set_thumbnail(url=ctx.author.avatar_url)
+  chl = client.get_channel(771251330920480788)
+  await chl.send(embed=wel)
 
 client.run(os.environ['DISCORD_TOKEN'])
