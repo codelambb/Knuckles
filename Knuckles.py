@@ -84,7 +84,7 @@ async def help(ctx):
 @client.command()
 async def modhelp(ctx):
 	mod = discord.Embed(tittle="mod", color=ctx.author.color)
-	mod.add_field(name="Moderation Command Menu", value="```!clear (ammount) : Deletes the specified ammount of messages from the channel```\n```!ban (user) (reasion) : Bans the specified user from the server```\n```!kick (user) (reason) : Kicks the specified user from the server```\n```mute (user) (reason) : Mutes the specified user from the server```\n```unmute (user) : Unmutes the specified user```\n```announce (message) : Makes an announcemnt with sylish embed style```\n")
+	mod.add_field(name="Moderation Command Menu", value="```!clear (ammount) : Deletes the specified ammount of messages from the channel```\n```!ban (user) (reasion) : Bans the specified user from the server```\n```!kick (user) (reason) : Kicks the specified user from the server```\n```!mute (user) (reason) : Mutes the specified user from the server```\n```!unmute (user) : Unmutes the specified user```\n```!announce (message) : Makes an announcemnt with sylish embed style```\n")
 	mod.set_footer(text="More moderation commands will be added soon")
 	await ctx.send(embed=mod)
 
@@ -92,7 +92,7 @@ async def modhelp(ctx):
 @client.command()
 async def mischelp(ctx):
 	misc = discord.Embed(tittle="misc", color=ctx.author.color)
-	misc.add_field(name="Miscellaneous Command Menu", value="```!ping : Tells the bot's latency```\n```!8ball (question) : Tells the answer of the asked question in a random yes/no answer```\n```!meme : Send a hot meme from reddit```\n```")
+	misc.add_field(name="Miscellaneous Command Menu", value="```!ping : Tells the bot's latency```\n```!8ball (question) : Tells the answer of the asked question in a random yes/no answer```\n```!meme : Send a hot meme from reddit```\n```!serverinfo : Send info about server```\n```!userinfo (user) : Send info about specified user```\n")
 	misc.set_footer(text="More miscellaneous commands will be added soon")
 	await ctx.send(embed=misc)
 
@@ -195,19 +195,78 @@ async def on_message(msg):
 @client.command()
 @commands.has_role("Not Verified")
 async def verify(ctx):
-  verifiedrole = discord.utils.get(ctx.guild.roles, name='Verified')
+  verifiedrole = discord.utils.get(ctx.guild.roles, name='Members')
   await ctx.author.add_roles(verifiedrole)
   verify = discord.Embed(title="Verification",description="Congrats! You have been verified!", color=ctx.author.color)
   await ctx.send(embed=verify)
   await ctx.author.send(embed=verify)
   u = discord.utils.get(ctx.guild.roles, name='Not Verified')
+  e = discord.utils.get(ctx.guild.roles, name='⁣  ⁣    ⁣     About Me⁣  ⁣    ⁣')
+  x = discord.utils.get(ctx.guild.roles, name='⁣  ⁣    ⁣    Games I play ⁣   ⁣      ⁣ ⁣')
+  o = discord.utils.get(ctx.guild.roles, name='⁣⁣   ⁣ ⁣   ⁣ ⁣     Pings         ⁣  ⁣ ⁣ ⁣')  
   await ctx.author.remove_roles(u)
-  wel = discord.Embed(title=f"Welcome to {ctx.author.name} 𝗕𝗿𝘂𝘁𝗲 𝗙𝗼𝗿𝗰𝗲 𝗢𝗻𝗹𝘆 ™",color=discord.Color.red())
-  wel.add_field(name="Here you can find:", value="🎮》Gaming and game chat\n🎮》Game nights (coming soon)\n🎮》Music\n🎮》Fun bots to entertain you :)\n")
-  wel.add_field(name="Check out these channels!!!", value="#🏡》about-us - to know about us\n#📜》rules - make sure to follow them\n#📊》self-roles - give yourself some cool roles")
-  wel.set_image(url='https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/67401945-34fc-46b8-8e8f-1982847277d4/ddba22b-2fad9d00-1d3f-4ec8-a65d-199a09dfa4e1.gif?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOiIsImlzcyI6InVybjphcHA6Iiwib2JqIjpbW3sicGF0aCI6IlwvZlwvNjc0MDE5NDUtMzRmYy00NmI4LThlOGYtMTk4Mjg0NzI3N2Q0XC9kZGJhMjJiLTJmYWQ5ZDAwLTFkM2YtNGVjOC1hNjVkLTE5OWEwOWRmYTRlMS5naWYifV1dLCJhdWQiOlsidXJuOnNlcnZpY2U6ZmlsZS5kb3dubG9hZCJdfQ._-whxwEBEaTLWUvSWL80KTGiwpoy9dSPzXSRhfTAzeM')
+  await ctx.author.add_roles(e)
+  await ctx.author.add_roles(x)
+  await ctx.author.add_roles(o)
+  wel = discord.Embed(title=f"Welcome {ctx.author.name} to 𝗕𝗿𝘂𝘁𝗲 𝗙𝗼𝗿𝗰𝗲 𝗢𝗻𝗹𝘆 ™",color=discord.Color.red())
+  wel.add_field(name="Here you can find:", value="🎮》Gaming and game chat\n🎮》Game nights (coming soon)\n🎮》Music\n🎮》Fun bots to entertain you :)\n",inline=False)
+  wel.add_field(name="Check out these channels!!!", value="#🏡》about-us - to know about us\n#📜》rules - make sure to follow them\n#📊》self-roles - give yourself some cool roles",inline=False)
+  wel.set_image(url='https://media.discordapp.net/attachments/775769420206964776/786541416775286814/Presentation1.png')
   wel.set_thumbnail(url=ctx.author.avatar_url)
   chl = client.get_channel(771251330920480788)
   await chl.send(embed=wel)
 
-client.run(os.environ['DISCORD_TOKEN'])
+#server info command
+@client.command(aliases=['si'])
+async def serverinfo(ctx):
+  guild=ctx.guild
+
+  em=discord.Embed(title=f"{guild.name} info", color=ctx.author.color)
+  em.set_footer(text=f'Requested by {ctx.author.name}')
+  em.add_field(name='Total members', value=f"{guild.member_count}")
+  em.add_field(name="Owner", value="DarkStalker.GG#6909")
+  em.add_field(name="Server created on:", value=guild.created_at.strftime("%a, %#d %B %Y, %I:%M %p UTC"))
+
+  await ctx.send(embed=em)
+
+#userinfo command
+@client.command(aliases=["ui"])
+async def userinfo(ctx, member: discord.Member):
+  
+  em=discord.Embed(color=member.color)
+
+  em.set_author(name=f"{member.name}'s info")
+  em.set_thumbnail(url=member.avatar_url)
+  em.set_footer(text=f"Requested by {ctx.author.name}")
+
+  em.add_field(name='Member Name', value=member.name)
+  em.add_field(name="Member name in guild", value=member.display_name)
+
+  em.add_field(name="Joined at:", value=member.joined_at.strftime("%a, %#d %B %Y, %I:%M %p UTC"))
+
+  await ctx.send(embed=em)
+
+#auto role
+@client.event
+async def on_member_join(member):
+  notrole=discord.utils.get(member.guild.roles, name='Not Verified')
+  await member.add_roles(notrole)
+
+#all the errors
+
+#verify error
+@verify.error 
+async def verify_error(ctx, error):
+    em=discord.Embed(title="Error", description="You are already verified!", color=discord.Color.red())
+    await ctx.send(embed=em, delete_after=5)
+
+#userinfo error
+@userinfo.error
+async def userinfo_error(ctx, error):
+    if isinstance(error, commands.MissingRequiredArgument):
+
+        em = discord.Embed(title = "Error", description = "Please pass all required arguments", color = discord.Color.red())
+
+        await ctx.send(embed=em, delete_after=5)
+
+client.run('NzgzODg5OTcxMTUzMDc2Mjc5.X8hUbQ.qlZthWq3YDvzo__WrEyTU2ziKkE')
