@@ -24,10 +24,6 @@ filter_words = ["fuck","bitch","pussy","chutiya","sala","arse"]
 async def on_ready():
 	change_status.start()
 	print('Bot is ready.')
-  Channel = client.get_channel(784259046533365801)
-  Text= "React here to get the blue role!"
-  Moji = await Channel.send(Text)
-  await client.add_reaction(Moji, emoji='🏃')
 
 @tasks.loop(seconds=20)
 async def change_status():
@@ -49,12 +45,11 @@ async def clear(ctx, ammount: int):
 #reaction roles    
 @client.event
 async def on_reaction_add(reaction, user):
-    Channel = client.get_channel(784259046533365801)
-    if reaction.message.channel.id != Channel
-    return
-    if reaction.emoji == "🏃":
-      Role = discord.utils.get(user.server.roles, name="Blue")
-      await user.add_roles(Role)
+    channel = client.get_channel(784259046533365801)
+    if reaction.channel.id == channel:
+      if reaction.emoji == "🏃":
+        Role = discord.utils.get(user.server.roles, name="Blue")
+        await user.add_roles(Role)
 
 #8ball command
 @client.command(aliases=['8ball'])
