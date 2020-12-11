@@ -270,6 +270,48 @@ async def userinfo(ctx, member: discord.Member):
 
   await ctx.send(embed=em)
 
+#eval command
+@client.command()
+async def eval(ctx):
+	await ctx.send('Type !add (1st number) (2nd number)')
+	await ctx.send('Type !sub (1st number) (2nd number)')
+	await ctx.send('Type !multi (1st number) (2nd number)')
+	await ctx.send('Type !div (1st number) (2nd number)')
+
+#sub command
+@client.command()
+async def add(ctx, x, y):
+	u = int(x) - int(y)
+	await ctx.send(f'Sum after adding {x} and {y} is {u}')
+
+#sub command
+@client.command()
+async def sum(ctx, x, y):
+	u = int(x) - int(y)
+	await ctx.send(f'Difference after subtracting {y} from {x} is {u}')
+
+#multi command
+@client.command()
+async def multi(ctx, x, y):
+	u = int(x) * int(y)
+	await ctx.send(f'Product after multiplying {x} and {y} is {u}')
+
+#div command
+@client.command()
+async def div(ctx, x, y):
+	u = int(x) / int(y)
+	await ctx.send(f'Quotient after dividing {y} from {x} is {u}')
+
+#blue command
+@client.command()
+async def blue(ctx):
+	if ctx.channel.id == '786908987760574464':
+		b = discord.utils.get(ctx.guild.roles, name='Blue')
+		await ctx.author.add_roles(b)
+		await ctx.author.send(f'You have been given the blue color role!')
+	else:
+		await ctx.send(f'You can only use this command in #colour-roles')
+
 #auto role
 @client.event
 async def on_member_join(member):
