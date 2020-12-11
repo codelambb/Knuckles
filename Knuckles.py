@@ -44,11 +44,11 @@ async def clear(ctx, ammount: int):
 
 #reaction roles    
 @client.event
-async def on_reaction_add(reaction, user):
+async def on_reaction_add(ctx, reaction, user):
     channel = client.get_channel(784259046533365801)
     if reaction.channel.id == channel:
       if reaction.emoji == "🏃":
-        Role = discord.utils.get(user.server.roles, name="Blue")
+        Role = discord.utils.get(ctx.guild.roles, name="Blue")
         await user.add_roles(Role)
 
 #8ball command
