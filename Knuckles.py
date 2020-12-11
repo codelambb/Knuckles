@@ -157,7 +157,7 @@ async def mute(ctx, member: discord.Member, mute_time, *, reason=None):
 async def unmute(ctx, member: discord.Member):
 	mutedRole = discord.utils.get(ctx.guild.roles, name="Muted")
 	await member.remove_roles(mutedRole)
-	await ctx.send(f'Unmuted {ctx.members.mention}')
+	await ctx.send(f'Unmuted {member}')
 
 #meme command
 @client.command()
@@ -235,7 +235,7 @@ async def verify(ctx):
   wel = discord.Embed(title=f"Welcome {ctx.author.name} to 𝗕𝗿𝘂𝘁𝗲 𝗙𝗼𝗿𝗰𝗲 𝗢𝗻𝗹𝘆 ™", color=discord.Color.red())
   wel.add_field(name="Here you can find:",value="🎮》Gaming and game chat\n🎮》Game nights (coming soon)\n🎮》Music\n🎮》Fun bots to entertain you :)\n", inline=False)
   wel.add_field(name="Check out these channels!!!", value="#🏡》about-us - to know about us\n#📜》rules - make sure to follow them\n#📊》self-roles - give yourself some cool roles\n", inline=False)
-  wel.set_thumbnail(url=ctx.avatar_url)
+  wel.set_thumbnail(url=ctx.author.avatar_url)
   wel.set_image(url='https://images-ext-2.discordapp.net/external/bv_iH_uxZrUrqYi4Sn6sQJg70dGllmRNPMELNCzudlU/%3Fwidth%3D627%26height%3D390/https/media.discordapp.net/attachments/775232813510426694/782935786470899772/Presentation1.png')
   chl = client.get_channel(771251330920480788)
   await chl.send(embed=wel)
