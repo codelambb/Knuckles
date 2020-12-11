@@ -305,12 +305,9 @@ async def div(ctx, x, y):
 #blue command
 @client.command()
 async def blue(ctx):
-	if ctx.channel.id == '786908987760574464':
-		b = discord.utils.get(ctx.guild.roles, name='Blue')
-		await ctx.author.add_roles(b)
-		await ctx.author.send(f'You have been given the blue color role!')
-	else:
-		await ctx.send(f'You can only use this command in #colour-roles')
+	b = discord.utils.get(ctx.guild.roles, name='Blue')
+	await ctx.author.add_roles(b)
+	await ctx.author.send(f'You have been given the blue color role!')
 
 #auto role
 @client.event
