@@ -42,15 +42,6 @@ async def clear(ctx, ammount: int):
     await ctx.send(f'I have deleted {ammount} of messages', delete_after=5)
     return
 
-#reaction roles    
-@client.event
-async def on_reaction_add(ctx, reaction):
-    channel = client.get_channel(784259046533365801)
-    if reaction.channel.id == channel:
-      if reaction.emoji == "🔵":
-        Role = discord.utils.get(ctx.guild.roles, name="Blue")
-        await reaction.author.add_roles(Role)
-
 #8ball command
 @client.command(aliases=['8ball'])
 async def _8ball(ctx, question):
