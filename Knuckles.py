@@ -302,12 +302,165 @@ async def div(ctx, x, y):
 	u = int(x) / int(y)
 	await ctx.send(f'Quotient after dividing {y} from {x} is {u}')
 
-#blue command
+#Blue command add
 @client.command()
-async def blue(ctx):
+async def add_Blue(ctx):
 	b = discord.utils.get(ctx.guild.roles, name='Blue')
+	await ctx.channel.purge(limit=1)
 	await ctx.author.add_roles(b)
-	await ctx.author.send(f'You have been given the blue color role!')
+	await ctx.author.send(f'You have been given the Blue color role!')
+
+#Blue command remove
+@client.command()
+async def add_Blue(ctx):
+	b = discord.utils.get(ctx.guild.roles, name='Blue')
+	await ctx.channel.purge(limit=1)
+	await ctx.author.remove_roles(b)
+	await ctx.author.send(f'Sucessfully removed the Blue role from you!')
+
+#Red command add
+@client.command()
+async def add_Red(ctx):
+	b = discord.utils.get(ctx.guild.roles, name='Red')
+	await ctx.channel.purge(limit=1)
+	await ctx.author.add_roles(b)
+	await ctx.author.send(f'You have been given the Red color role!')
+
+#Red command remove
+@client.command()
+async def add_Red(ctx):
+	b = discord.utils.get(ctx.guild.roles, name='Red')
+	await ctx.channel.purge(limit=1)
+	await ctx.author.remove_roles(b)
+	await ctx.author.send(f'Sucessfully removed the Red role from you!')
+
+#Yellow command add
+@client.command()
+async def add_Yellow(ctx):
+  b = discord.utils.get(ctx.guild.roles, name='Yellow')
+  await ctx.channel.purge(limit=1)
+  await ctx.author.add_roles(b)
+  await ctx.author.send(f'You have been given the Yellow color role!')
+
+#Yellow command remove
+@client.command()
+async def add_Yellow(ctx):
+  b = discord.utils.get(ctx.guild.roles, name='Yellow')
+  await ctx.channel.purge(limit=1)
+  await ctx.author.remove_roles(b)
+  await ctx.author.send(f'Sucessfully removed the Yellow role from you!')
+
+#Black command add
+@client.command()
+async def add_Black(ctx):
+  b = discord.utils.get(ctx.guild.roles, name='Black')
+  await ctx.channel.purge(limit=1)
+  await ctx.author.add_roles(b)
+  await ctx.author.send(f'You have been given the Black color role!')
+
+#Black command remove
+@client.command()
+async def add_Black(ctx):
+  b = discord.utils.get(ctx.guild.roles, name='Black')
+  await ctx.channel.purge(limit=1)
+  await ctx.author.remove_roles(b)
+  await ctx.author.send(f'Sucessfully removed the Black role from you!')
+
+#Pink command add
+@client.command()
+async def add_Pink(ctx):
+  b = discord.utils.get(ctx.guild.roles, name='Pink')
+  await ctx.channel.purge(limit=1)
+  await ctx.author.add_roles(b)
+  await ctx.author.send(f'You have been given the Pink color role!')
+
+#Pink command remove
+@client.command()
+async def add_Pink(ctx):
+  b = discord.utils.get(ctx.guild.roles, name='Pink')
+  await ctx.channel.purge(limit=1)
+  await ctx.author.remove_roles(b)
+  await ctx.author.send(f'Sucessfully removed the Pink role from you!')
+
+#Orange command add
+@client.command()
+async def add_Orange(ctx):
+  b = discord.utils.get(ctx.guild.roles, name='Orange')
+  await ctx.channel.purge(limit=1)
+  await ctx.author.add_roles(b)
+  await ctx.author.send(f'You have been given the Orange color role!')
+
+#Orange command remove
+@client.command()
+async def add_Orange(ctx):
+  b = discord.utils.get(ctx.guild.roles, name='Orange')
+  await ctx.channel.purge(limit=1)
+  await ctx.author.remove_roles(b)
+  await ctx.author.send(f'Sucessfully removed the Orange role from you!')
+
+#Purple command add
+@client.command()
+async def add_Purple(ctx):
+  b = discord.utils.get(ctx.guild.roles, name='Purple')
+  await ctx.channel.purge(limit=1)
+  await ctx.author.add_roles(b)
+  await ctx.author.send(f'You have been given the Purple color role!')
+
+#Purple command remove
+@client.command()
+async def add_Purple(ctx):
+  b = discord.utils.get(ctx.guild.roles, name='Purple')
+  await ctx.channel.purge(limit=1)
+  await ctx.author.remove_roles(b)
+  await ctx.author.send(f'Sucessfully removed the Purple role from you!')
+
+#Green command add
+@client.command()
+async def add_Green(ctx):
+  b = discord.utils.get(ctx.guild.roles, name='Green')
+  await ctx.channel.purge(limit=1)
+  await ctx.author.add_roles(b)
+  await ctx.author.send(f'You have been given the Green color role!')
+
+#Green command remove
+@client.command()
+async def add_Green(ctx):
+  b = discord.utils.get(ctx.guild.roles, name='Green')
+  await ctx.channel.purge(limit=1)
+  await ctx.author.remove_roles(b)
+  await ctx.author.send(f'Sucessfully removed the Green role from you!')
+
+#Brown command add
+@client.command()
+async def add_Brown(ctx):
+  b = discord.utils.get(ctx.guild.roles, name='Brown')
+  await ctx.channel.purge(limit=1)
+  await ctx.author.add_roles(b)
+  await ctx.author.send(f'You have been given the Brown color role!')
+
+#Brown command remove
+@client.command()
+async def add_Brown(ctx):
+  b = discord.utils.get(ctx.guild.roles, name='Brown')
+  await ctx.channel.purge(limit=1)
+  await ctx.author.remove_roles(b)
+  await ctx.author.send(f'Sucessfully removed the Brown role from you!')
+
+#White command add
+@client.command()
+async def add_White(ctx):
+  b = discord.utils.get(ctx.guild.roles, name='White')
+  await ctx.channel.purge(limit=1)
+  await ctx.author.add_roles(b)
+  await ctx.author.send(f'You have been given the White color role!')
+
+#White command remove
+@client.command()
+async def add_White(ctx):
+  b = discord.utils.get(ctx.guild.roles, name='White')
+  await ctx.channel.purge(limit=1)
+  await ctx.author.remove_roles(b)
+  await ctx.author.send(f'Sucessfully removed the White role from you!')
 
 #auto role
 @client.event
