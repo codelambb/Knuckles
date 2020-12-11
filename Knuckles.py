@@ -408,7 +408,7 @@ async def add_Purple(ctx):
 
 #Purple command remove
 @client.command()
-async def add_Purple(ctx):
+async def remove_Purple(ctx):
   b = discord.utils.get(ctx.guild.roles, name='Purple')
   await ctx.channel.purge(limit=1)
   await ctx.author.remove_roles(b)
@@ -424,7 +424,7 @@ async def add_Green(ctx):
 
 #Green command remove
 @client.command()
-async def add_Green(ctx):
+async def remove_Green(ctx):
   b = discord.utils.get(ctx.guild.roles, name='Green')
   await ctx.channel.purge(limit=1)
   await ctx.author.remove_roles(b)
@@ -440,7 +440,7 @@ async def add_Brown(ctx):
 
 #Brown command remove
 @client.command()
-async def add_Brown(ctx):
+async def remove_Brown(ctx):
   b = discord.utils.get(ctx.guild.roles, name='Brown')
   await ctx.channel.purge(limit=1)
   await ctx.author.remove_roles(b)
@@ -456,7 +456,7 @@ async def add_White(ctx):
 
 #White command remove
 @client.command()
-async def add_White(ctx):
+async def remove_White(ctx):
   b = discord.utils.get(ctx.guild.roles, name='White')
   await ctx.channel.purge(limit=1)
   await ctx.author.remove_roles(b)
