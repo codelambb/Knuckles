@@ -90,7 +90,7 @@ async def modhelp(ctx):
 @client.command()
 async def mischelp(ctx):
 	misc = discord.Embed(tittle="misc", color=ctx.author.color)
-	misc.add_field(name="Miscellaneous Command Menu", value="```!ping : Tells the bot's latency```\n```!8ball (question) : Tells the answer of the asked question in a random yes/no answer```\n```!meme : Send a hot meme from reddit```\n```!serverinfo : Send info about server```\n```!userinfo (user) : Send info about specified user```\n")
+	misc.add_field(name="Miscellaneous Command Menu", value="```!ping : Tells the bot's latency```\n```!8ball (question) : Tells the answer of the asked question in a random yes/no answer```\n```!meme : Send a hot meme from reddit```\n```!serverinfo : Send info about server```\n```!userinfo (user) : Send info about specified user```\n!eval : For doing fast calculations!")
 	misc.set_footer(text="More miscellaneous commands will be added soon")
 	await ctx.send(embed=misc)
 
@@ -278,15 +278,15 @@ async def eval(ctx):
 	await ctx.send('Type !multi (1st number) (2nd number)')
 	await ctx.send('Type !div (1st number) (2nd number)')
 
-#sub command
+#add command
 @client.command()
 async def add(ctx, x, y):
-	u = int(x) - int(y)
+	u = int(x) + int(y)
 	await ctx.send(f'Sum after adding {x} and {y} is {u}')
 
 #sub command
 @client.command()
-async def sum(ctx, x, y):
+async def sub(ctx, x, y):
 	u = int(x) - int(y)
 	await ctx.send(f'Difference after subtracting {y} from {x} is {u}')
 
