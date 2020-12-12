@@ -299,11 +299,7 @@ async def multi(ctx, x, y):
 #div command
 @client.command()
 async def div(ctx, x, y):
-	if y == 0:
-    await ctx.send(f'Not possible')
-    return
-
-  u = int(x) / int(y)
+	u = int(x) / int(y)
 	await ctx.send(f'Quotient after dividing {y} from {x} is {u}')
 
 #Blue command add
@@ -492,5 +488,24 @@ async def userinfo_error(ctx, error):
         em = discord.Embed(title = "Error", description = "Please pass all required arguments", color = discord.Color.red())
 
         await ctx.send(embed=em, delete_after=5)
+
+#suggest error
+@suggest.error 
+async def suggest_error(ctx, error):
+    if isinstance(error, commands.MissingRequiredArgument):
+        em=discord.Embed(title="Error", description="Please specify a suggestion message you want to use", color=discord.Color.red())
+        await ctx.send(embed=em, delete_after=5)
+
+#verify error
+@verify.error 
+async def verify_error(ctx, error):
+    em=discord.Embed(title="Error", description="You are already verified!", color=discord.Color.red())
+    await ctx.send(embed=em, delete_after=5)
+
+#div error
+@div.error 
+async def div_error(ctx, error):
+    em=discord.Embed(title="Error", description="Not Possible", color=discord.Color.red())
+    await ctx.send(embed=em, delete_after=5)
 
 client.run(os.environ['DISCORD_TOKEN'])
