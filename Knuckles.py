@@ -299,7 +299,11 @@ async def multi(ctx, x, y):
 #div command
 @client.command()
 async def div(ctx, x, y):
-	u = int(x) / int(y)
+	if y == 0:
+    await ctx.send(f'Not possible')
+    return
+
+  u = int(x) / int(y)
 	await ctx.send(f'Quotient after dividing {y} from {x} is {u}')
 
 #Blue command add
