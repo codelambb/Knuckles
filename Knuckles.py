@@ -468,6 +468,16 @@ async def on_member_join(member):
   notrole=discord.utils.get(member.guild.roles, name='Not Verified')
   await member.add_roles(notrole)
 
+#suggest command
+@client.command()
+async def suggest(ctx, *, message):
+  em=discord.Embed(title="Suggestion", description=message,color=ctx.author.color)
+  em.set_footer(text=f"Suggestion by {ctx.author.name}")
+  channel = client.get_channel(787197497323552788)
+  message_ = await channel.send(embed=em)
+  await message_.add_reaction("✅")
+  await message_.add_reaction("❎")
+
 #all the errors
 
 #userinfo error
