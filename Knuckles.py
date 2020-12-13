@@ -462,12 +462,6 @@ async def remove_White(ctx):
   await ctx.author.remove_roles(b)
   await ctx.author.send(f'Sucessfully removed the White role from you!')
 
-#auto role
-@client.event
-async def on_member_join(member):
-  notrole=discord.utils.get(member.guild.roles, name='Not Verified')
-  await member.add_roles(notrole)
-
 #suggest command
 @client.command()
 async def suggest(ctx, *, message):
@@ -477,11 +471,6 @@ async def suggest(ctx, *, message):
   message_ = await channel.send(embed=em)
   await message_.add_reaction("✅")
   await message_.add_reaction("❎")
-
-#member count command
-@client.command()
-async def membercount(ctx):
-    await ctx.send(f"{true_member_count = len([m for m in ctx.guild.members if not m.bot])} members")
 
 #all the errors
 
