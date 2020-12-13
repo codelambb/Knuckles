@@ -82,7 +82,7 @@ async def help(ctx):
 @client.command()
 async def modhelp(ctx):
 	mod = discord.Embed(tittle="mod", color=ctx.author.color)
-	mod.add_field(name="Moderation Command Menu", value="```!clear (ammount) : Deletes the specified ammount of messages from the channel```\n```!ban (user) (reasion) : Bans the specified user from the server```\n```!kick (user) (reason) : Kicks the specified user from the server```\n```!mute (user) (reason) : Mutes the specified user from the server```\n```!unmute (user) : Unmutes the specified user```\n```!announce (message) : Makes an announcemnt with sylish embed style```\n")
+	mod.add_field(name="Moderation Command Menu", value="```!clear (ammount) : Deletes the specified ammount of messages from the channel```\n```!ban (user) (reasion) : Bans the specified user from the server```\n```!kick (user) (reason) : Kicks the specified user from the server```\n```!mute (user) (time) (reason) : Mutes the specified user from the server```\n```!unmute (user) : Unmutes the specified user```\n```!announce (message) : Makes an announcemnt with sylish embed style```\n")
 	mod.set_footer(text="More moderation commands will be added soon")
 	await ctx.send(embed=mod)
 
@@ -90,7 +90,7 @@ async def modhelp(ctx):
 @client.command()
 async def mischelp(ctx):
 	misc = discord.Embed(tittle="misc", color=ctx.author.color)
-	misc.add_field(name="Miscellaneous Command Menu", value="```!ping : Tells the bot's latency```\n```!8ball (question) : Tells the answer of the asked question in a random yes/no answer```\n```!meme : Send a hot meme from reddit```\n```!serverinfo : Send info about server```\n```!userinfo (user) : Send info about specified user```\n!eval : For doing fast calculations!")
+	misc.add_field(name="Miscellaneous Command Menu", value="```!ping : Tells the bot's latency```\n```!8ball (question) : Tells the answer of the asked question in a random yes/no answer```\n```!meme : Send a hot meme from reddit```\n```!serverinfo : Send info about server```\n```!userinfo (user) : Send info about specified user```\n```!eval : For doing fast calculations!```\n")
 	misc.set_footer(text="More miscellaneous commands will be added soon")
 	await ctx.send(embed=misc)
 
@@ -477,6 +477,11 @@ async def suggest(ctx, *, message):
   message_ = await channel.send(embed=em)
   await message_.add_reaction("✅")
   await message_.add_reaction("❎")
+
+#member count command
+@client.command()
+async def membercount(ctx):
+    await ctx.send(f"{true_member_count = len([m for m in ctx.guild.members if not m.bot])} members")
 
 #all the errors
 
