@@ -321,9 +321,7 @@ async def on_member_join(member):
 #avatar command
 @client.command()
 async def avatar(ctx, member: discord.Member):
-	em = discord.Embed(title=f"Avatar of {member}", color=ctx.author.color)
-	em.set_image(url = member.avatar_url)
-	await ctx.send(embed = em)
+	await ctx.send(member.avatar_url)
 
 #all the errors
 
