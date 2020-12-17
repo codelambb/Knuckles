@@ -476,7 +476,7 @@ async def suggest(ctx, *, message):
 @client.event
 async def on_member_join(member):
 	channel = client.get_channel(775440270590214164)
-	await channel.send(f'{member.mention} has joined the server)
+	await channel.send(f'{member.mention} has joined the server')
 
 #all the errors
 
