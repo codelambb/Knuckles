@@ -137,7 +137,7 @@ async def mute(ctx, member: discord.Member, mute_time, *, reason=None):
     	await asyncio.sleep(x)
     	await member.remove_roles(role)
     	await ctx.send(f"{member.mention} was unmuted")
-    
+
 
     elif mute_time[-1] == 'h':
     	x = int(mute_time[0:-1]) * 3600
@@ -168,7 +168,7 @@ async def meme(ctx):
             embed = discord.Embed(title = "Memes", color = discord.Color.orange())
             embed.set_image(url=res['data']['children'] [random.randint(0, 25)]['data']['url'])
             await ctx.send(embed=embed)
-            
+
 #kill command
 @client.command()
 async def kill(ctx, user):
@@ -204,7 +204,7 @@ async def on_message(msg):
     if word in msg.content:
       await msg.delete()
       await msg.channel.send(f"{msg.author.mention}, Swearing is not allowed in this server")
-  
+
   #Good night message
   if msg == 'gn' or msg == 'good night':
     await msg.channel.send("Good Night!")
@@ -256,7 +256,7 @@ async def serverinfo(ctx):
 #userinfo command
 @client.command(aliases=["ui"])
 async def userinfo(ctx, member: discord.Member):
-  
+
   em=discord.Embed(color=member.color)
 
   em.set_author(name=f"{member.name}'s info")
@@ -472,6 +472,12 @@ async def suggest(ctx, *, message):
   await message_.add_reaction("✅")
   await message_.add_reaction("❎")
 
+#member join log
+@client.event
+async def on_member_join(member):
+	channel = client.get_channel(775440270590214164)
+	await channel.send(f'{member.mention} has joined the server)
+
 #all the errors
 
 #userinfo error
@@ -484,20 +490,20 @@ async def userinfo_error(ctx, error):
         await ctx.send(embed=em, delete_after=5)
 
 #suggest error
-@suggest.error 
+@suggest.error
 async def suggest_error(ctx, error):
     if isinstance(error, commands.MissingRequiredArgument):
         em=discord.Embed(title="Error", description="Please specify a suggestion message you want to use", color=discord.Color.red())
         await ctx.send(embed=em, delete_after=5)
 
 #verify error
-@verify.error 
+@verify.error
 async def verify_error(ctx, error):
     em=discord.Embed(title="Error", description="You are already verified!", color=discord.Color.red())
     await ctx.send(embed=em, delete_after=5)
 
 #div error
-@div.error 
+@div.error
 async def div_error(ctx, error):
     em=discord.Embed(title="Error", description="Not Possible", color=discord.Color.red())
     await ctx.send(embed=em, delete_after=5)
