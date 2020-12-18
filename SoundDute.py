@@ -88,18 +88,18 @@ async def verify(ctx):
 
 #auto role
 @client.command()
-async def test(member):
+async def test(ctx):
   notrole=discord.utils.get(member.guild.roles, name='Not verified')
   await member.add_roles(notrole)
   em = discord.Embed(title="Welcome  To 𝓢𝓭॥乛|SoundDute|•|™", color=discord.Color.blue())
-  em.add_field(name="◆━━━━━━━━━◆❃◆━━━━━━━━━◆", value=f"Hello, {member}", inline=False)
+  em.add_field(name="◆━━━━━━━━━◆❃◆━━━━━━━━━◆", value=f"Hello, {ctx.author.name}", inline=False)
   em.add_field(name="◆━━━━━━━━━◆❃◆━━━━━━━━━◆", value=f"◈  WELCOME TO OUR SEVER", inline=False)
   em.add_field(name="◆━━━━━━━━━◆❃◆━━━━━━━━━◆", value=f"◈  READ THE SEVER RULES IN #📜〡𝖱ules", inline=False)
   em.add_field(name="◆━━━━━━━━━◆❃◆━━━━━━━━━◆", value=f"◈  TAKE YOUR ROLES IN #🔰〡𝖲elf-𝖱oles", inline=False)
   em.add_field(name="◆━━━━━━━━━◆❃◆━━━━━━━━━◆", value=f"◈ Choose Your Favorite Colour In  #🎨〡𝖢olour-𝖱oles", inline=False)
   em.add_field(name="◆━━━━━━━━━◆❃◆━━━━━━━━━◆", value=f"◈ Always Check #📣〡𝖠nnouncements", inline=False)
   em.add_field(name="◆━━━━━━━━━◆❃◆━━━━━━━━━◆", value=f"◈  BE ACTIVE IN #🗨️〡𝖦eneral-𝖢hat\n◆━━━━━━━━━◆❃◆━━━━━━━━━◆", inline=False)
-  em.set_thumbnail(url=member.avatar_url)
+  em.set_thumbnail(url=ctx.author.avatar_url)
   chl = client.get_channel(786589900609945674)
   await chl.send(embed=em)
 
