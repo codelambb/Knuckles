@@ -87,7 +87,7 @@ async def verify(ctx):
   await ctx.author.remove_roles(u)
 
 #auto role
-@client.command
+@client.command()
 async def test(member):
   notrole=discord.utils.get(member.guild.roles, name='Not verified')
   await member.add_roles(notrole)
