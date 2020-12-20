@@ -204,24 +204,6 @@ async def on_message(msg):
     if word in msg.content:
       await msg.delete()
       await msg.channel.send(f"{msg.author.mention}, Swearing is not allowed in this server")
-	if msg.content.find("hello") or msg.content.find("Hello"):
-		await message.channel.send(f"Hi {msg.author.mention}")
-	if msg.content.find("sup") or msg.content.find("Sup"):
-		await message.channel.send(f"Sup {msg.author.mention}")
-	if msg.content.find("Hi") or msg.content.find("hi"):
-		await message.channel.send(f"Hello {msg.author.mention}")
-	if msg.content.find("bye") or msg.content.find("Bye"):
-		await message.channel.send(f"Goodbye {msg.author.mention}!")
-	if msg.content.find("cya") or msg.content.find("Cya"):
-		await message.channel.send(f"Cya {msg.author.mention}!")
-	if msg.content.find("gn") or msg.content.find("Gn"):
-		await message.channel.send(f"Gn {msg.author.mention}!")
-	if msg.content.find("gm") or msg.content.find("Gm"):
-		await message.channel.send(f"Gm {msg.author.mention}!")
-	if msg.content.find("good morning") or msg.content.find("Good morning"):
-		await message.channel.send(f"Good Morning {msg.author.mention}!")
-	if msg.content.find("good night") or msg.content.find("Good night"):
-		await message.channel.send(f"good night {msg.author.mention}!")
 
   await client.process_commands(msg)
 
