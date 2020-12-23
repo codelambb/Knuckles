@@ -20,11 +20,13 @@ client.remove_command("help")
 
 filter_words = ["fuck","bitch","pussy","chutiya","sala","arse"]
 
+#start
 @client.event
 async def on_ready():
 	change_status.start()
 	print('Bot is ready.')
 
+#status change
 @tasks.loop(seconds=20)
 async def change_status():
 	await client.change_presence(activity=discord.Game(choice(status)))
@@ -82,7 +84,7 @@ async def help(ctx):
 @client.command()
 async def modhelp(ctx):
 	mod = discord.Embed(tittle="mod", color=ctx.author.color)
-	mod.add_field(name="Moderation Command Menu", value="```!clear (ammount) : Deletes the specified ammount of messages from the channel```\n```!ban (user) (reasion) : Bans the specified user from the server```\n```!kick (user) (reason) : Kicks the specified user from the server```\n```!mute (user) (time) (reason) : Mutes the specified user from the server```\n```!unmute (user) : Unmutes the specified user```\n```!announce (message) : Makes an announcemnt with sylish embed style```\n")
+	mod.add_field(name="Moderation Command Menu", value="```!clear (ammount) : Deletes the specified ammount of messages from the channel```\n```!ban (user) (reasion) : Bans the specified user from the server```\n```!kick (user) (reason) : Kicks the specified user from the server```\n```!mute (user) (time) (reason) : Mutes the specified user from the server```\n```!unmute (user) : Unmutes the specified user```\n```!announce (message) : Makes an announcemnt with sylish embed style```\n```!addrole (user) (role) : Adds the specifieed role to specified user```\n```!removerole : Removes the specified role from the specified user```\n")
 	mod.set_footer(text="More moderation commands will be added soon")
 	await ctx.send(embed=mod)
 
@@ -303,6 +305,20 @@ async def suggest(ctx, *, message):
   message_ = await channel.send(embed=em)
   await message_.add_reaction("✅")
   await message_.add_reaction("❎")
+
+#addrole command
+@client.command(aliases=["a"])
+@commands.has_permissions(manage_roles=True, administrator=True)
+async def addrole(ctx, role: discord.Role, user: discord.Member):
+	await user.add_roles(role)
+	await ctx.send(f'Succesfully Done')
+
+#removerole command
+@client.command(aliases=["r"])
+@commands.has_permissions(manage_roles=True, administrator=True)
+async def removerole(ctx, role: discord.Role, user: discord.Member):
+	await user.remove_roles(role)
+	await ctx.send(f'Succesfully Done')
 
 #member join log
 @client.event
