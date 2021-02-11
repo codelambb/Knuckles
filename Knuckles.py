@@ -264,38 +264,6 @@ async def userinfo(ctx, member: discord.Member):
 
   await ctx.send(embed=em)
 
-#eval command
-@client.command()
-async def eval(ctx):
-	await ctx.send('Type !add (1st number) (2nd number)')
-	await ctx.send('Type !sub (1st number) (2nd number)')
-	await ctx.send('Type !multi (1st number) (2nd number)')
-	await ctx.send('Type !div (1st number) (2nd number)')
-
-#add command
-@client.command()
-async def add(ctx, x, y):
-	u = int(x) + int(y)
-	await ctx.send(f'Sum after adding {x} and {y} is {u}')
-
-#sub command
-@client.command()
-async def sub(ctx, x, y):
-	u = int(x) - int(y)
-	await ctx.send(f'Difference after subtracting {y} from {x} is {u}')
-
-#multi command
-@client.command()
-async def multi(ctx, x, y):
-	u = int(x) * int(y)
-	await ctx.send(f'Product after multiplying {x} and {y} is {u}')
-
-#div command
-@client.command()
-async def div(ctx, x, y):
-	u = int(x) / int(y)
-	await ctx.send(f'Quotient after dividing {y} from {x} is {u}')
-
 #suggest command
 @client.command()
 async def suggest(ctx, *, message):
